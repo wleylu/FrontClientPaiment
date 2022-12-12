@@ -1,0 +1,56 @@
+{
+  "FACTURE": {
+    "CodeTraitement": 0,
+    "MessageTraitement": "SUCCES",
+    "ReferenceContrat": "024314819 ",
+    "AdresseTechnique": "024314819000",
+    "NombreFacture": 3,
+    "MontantTotal": 0,
+    "ListeDesFactures": [
+      {
+        "CODE_TYP_FAC": "EG",
+        "TYP_FAC": "Facture d'Emission Normale",
+        "PER_FAC": "03/2020",
+        "NUM_FAC": "000097870103202001",
+        "MONTANT_TOTAL": 8685,
+        "SOLDE_FACTURE": 6260,
+        "MONTANT_PENALITE": 2425,
+        "SIGNE": "+",
+        "DATE_LIMIT": "15/07/2020"
+      },
+      {
+        "CODE_TYP_FAC": "ACC",
+        "TYP_FAC": "Paiement par avance",
+        "PER_FAC": "12/2018",
+        "NUM_FAC": "000097870111201801",
+        "MONTANT_TOTAL": 8545,
+        "SOLDE_FACTURE": 8545,
+        "MONTANT_PENALITE": 0,
+        "SIGNE": "-",
+        "DATE_LIMIT": ""
+      },
+      {
+        "CODE_TYP_FAC": "ACC",
+        "TYP_FAC": "Paiement par avance",
+        "PER_FAC": "12/2018",
+        "NUM_FAC": "000097870111201802",
+        "MONTANT_TOTAL": 10000,
+        "SOLDE_FACTURE": 10000,
+        "MONTANT_PENALITE": 0,
+        "SIGNE": "-",
+        "DATE_LIMIT": ""
+      },
+      {
+        "CODE_TYP_FAC": "ACC",
+        "TYP_FAC": "Paiement par avance",
+        "PER_FAC": "12/2018",
+        "NUM_FAC": "000097870111201803",
+        "MONTANT_TOTAL": 15000,
+        "SOLDE_FACTURE": 15000,
+        "MONTANT_PENALITE": 0,
+        "SIGNE": "-",
+        "DATE_LIMIT": ""
+      }
+    ]
+  }
+}

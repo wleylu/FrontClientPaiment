@@ -1,0 +1,46 @@
+
+
+
+
+<div class="wrapper fadeInDown">
+  <div id="formContent" style="
+  margin-top: 100px;
+">
+      <!-- Tabs Titles -->
+
+      <!-- Icon -->
+      <div class="fadeIn first">
+          <img src="assets/icone.png" id="icon" alt="User Icon" />
+          <h1>E-FACTURE</h1>
+      </div>
+
+      <!-- Login Form -->
+      <form [formGroup]="mdpForm" (ngSubmit)="CheckEmail()">
+
+
+
+          <!-- <div style="margin-bottom: 5px; color: red;" *ngIf="f.email.errors.required">Adresse email réquis</div> -->
+          <div style="margin-bottom: 5px; color: red;" *ngIf="verifEmail">Adresse Email inexistant</div>
+          <div style="margin-bottom: 5px; color: red;" *ngIf="m">Saisissez une adresse valide </div>
+          <div class="md-5">
+
+              <input required [ngClass]="{ 'is-invalid': submitted && f.email.errors }"  style="background-color: #f6f6f6;color: #0d0d0d;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 5px;width: 85%;border: 2px solid #f6f6f6;transition: all .5s ease-in-out;border-radius: 5px 5px 5px 5px;"
+              [(ngModel)]="email" placeholder="Entrez votre adresse Email" type="email" formControlName="email" name="email" class="form-control ">
+          </div>
+
+          <input  [disabled]="email === ''" type="submit" class="fadeIn fourth" value="Réinitialiser" >
+
+      </form>
+
+
+      <!-- Remind Passowrd -->
+            <div id="formFooter">
+    <a routerLink="/connexion" class="underlineHover">Retour à la page de connexion</a>
+  </div>
+
+  </div>
+
+
+</div>
+
+

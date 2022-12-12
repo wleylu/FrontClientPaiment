@@ -1,0 +1,58 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~font-awesome/css/font-awesome.css";
+html,
+body {
+    height: 1vh;
+
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mybtn1 {
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+}
+.myheader{
+  background: #105a9b !important;
+}
+.myTable{
+  text-size-adjust: auto;
+  font-size: 14px;
+}
+.myThead{
+  color: #ffffff;
+  background: #105a9b !important;
+}
+.myTbodyTd{
+  width: 19% !important;
+  text-align: center !important;
+}
+.myBtnGCode {
+  border: 1px solid #105a9b !important;
+  color: #105a9b !important;
+}
+
+.myBtnGCode:hover {
+  border: 1px solid #105a9b !important;
+  color: #ffffff !important;
+  background-color: #105a9b !important;
+}
+.myBtnGCode:focus {
+  border: 1px solid #105a9b !important;
+  color: #ffffff !important;
+  background-color: #105a9b !important;
+}
+.myBtnGAn{
+  border: 1px solid #105a9b !important;
+  color: #ffffff !important;
+  background-color: #105a9b !important;
+}
+.myCard{
+  box-shadow: 0px 2px 2px 2px #e8e5e5;
+}

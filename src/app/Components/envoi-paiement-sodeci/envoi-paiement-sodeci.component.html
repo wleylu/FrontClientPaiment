@@ -1,0 +1,303 @@
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1,
+        shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js,
+    then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+    </script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="sweetalert2.all.min.js"></script> //use this to initialize the plugin
+  <script src="sweetalert2.min.js"></script>
+</head>
+
+<div class="container">
+  <div *ngIf="show1" class="border">
+    <label class="mybtn">
+      <i class="fa fa-money "></i>ENVOI PAIEMENT</label>
+
+    <img src="assets/logoSodeci.png" style="width: 50px; float: right; margin-top: 3px; " alt=" ">
+    <!-- <img src="https://gibtp.ci/Images/Portfolio/logo-sodeci.jpg " style="width: 50px; float: right; margin-top: 3px; " alt=" "> -->
+  </div>
+
+  <div *ngIf="show" class="modal-body ">
+    <div *ngIf="show1" class="table-responsive">
+      <table data-toggle="table" data-pagination="true" data-pagination-h-align="left" data-pagination-detail-h-align="right " class="table table-bordered table-striped table-hover table-center">
+        <thead>
+          <tr>
+            <th>REFERENCE CONTRAT</th>
+            <th>IDENTIFIANT</th>
+            <th>PERIODE</th>
+            <th>DATE LIMITE</th>
+            <th>MONTANT</th>
+            <th style="text-align: center; ">SELECTION</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let envoi of SODECIFACTURE  | paginate: { itemsPerPage: 7, currentPage: p } ">
+            <td><span>{{contrat}}</span></td>
+            <td><span>{{envoi.NUM_FAC}}</span></td>
+            <td><span>{{envoi.PER_FAC }}</span></td>
+            <td><span>{{envoi.DATE_LIMIT}}</span></td>
+            <td><span>{{envoi.MONTANT_TOTAL}}</span></td>
+
+            <td style="text-align: center; ">
+              <button class="btn btn-sm btn-warning " (click)="openEdit1(contentEdit ,envoi)">
+                <i class="fa fa-money "></i>Payer
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls style="text-align: center;" (pageChange)="p = $event"></pagination-controls>
+    </div>
+
+  </div>
+
+  <ng-template #modalTest let-modal>
+    <div class="modal-header ">
+      <h4 class="modal-title " id="modal-basic-title2 ">RECHERCHEZ VOS FACTURES</h4>
+      <button type="button " routerLink="/Choix_facturier" class="close " aria-label="Close "
+        (click)="modal.dismiss( 'Cross click') ">
+        <span aria-hidden="true ">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body ">
+      <form #myForm="ngForm">
+        <div style="margin-bottom: 5px; color: red;" *ngIf="uname.errors?.minlength">
+          * La référence doit comporter au moins 09 chiffres.
+        </div>
+
+        <div class="input-group mb-3 has-search ">
+          <span class="fa fa-search form-control-feedback "></span>
+
+          <input (keypress)="numberOnly($event)" required #uname="ngModel" minlength="9" maxlength="13" type="text" name="identifiant" class="form-control "
+            [(ngModel)]="identifiant" placeholder="Entrer les 09 chiffres de votre référence contrat "
+            aria-label="Recipient 's username" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <input [disabled]="myForm.invalid || identifiant ===''|| identifiant < 9"class="btn btn-success" value="Rechercher "
+              type="submit " (click)="CheckId()">
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+    <!-- <div class="modal-footer ">
+        <button data-dismiss="modal " class="btn btn-success " (click)="onSubmit(f) ">Confirmer</button>
+
+    </div> -->
+  </ng-template>
+
+  <!-- <div class="modal-footer ">
+    <button (click)="openConfirm(contentDelete,f) " type="submit " data-dismiss="modal " class="btn btn-success " [disabled]="f.invalid ">VALIDER</button>
+
+    <!-- <button type="button " class="btn btn-outline-dark " (click)="modal.close( 'Save click ') ">Annuler</button> -->
+  <!-- </div> -->
+
+  <ng-template #contentDelete let-modal>
+    <div class="modal-header ">
+      <h4 class="modal-title ">Confirmation de la transaction</h4>
+      <button type="button " class="close " aria-label="Close " (click)="modal.dismiss( 'Cross click ') ">
+        <span aria-hidden="true ">&times;</span>
+      </button>
+    </div>
+    <div style="text-align: center; " class="modal-body ">
+      <button type="button " class="btn btn-danger " (click)="modal.close( 'Save click')">Annuler</button>
+
+      <button data-dismiss="modal " class="btn btn-success " (click)="onSubmit(f)">Confirmer</button>
+    </div>
+
+  </ng-template>
+
+  <ng-template #contentEdit let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title " id="modal-basic-title2 ">PAIEMENT FACTURE</h4>
+      <button type="button " class="close " aria-label="Close " (click)="modal.dismiss( 'Cross click ') ">
+        <span aria-hidden="true ">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #f="ngForm" [formGroup]="editForm" novalidate>
+        <div style="text-align: center;">
+          <h5>Type de paiement</h5>
+          <div class="form-check form-check-inline">
+            <input (click)="toggleOut()"  class="form-check-input " type="radio" formControlName="typePaye" name="typePaye" value="Total"
+              required>
+            <label class="form-check-label " for="inlineRadio1 ">TOTAL</label>
+          </div>
+          <div class="form-check form-check-inline ">
+            <input (click)="toggleShow() " class=" form-check-input " type="radio" formControlName="typePaye"
+              name="typePaye" value="Partiel" required>
+            <label class="form-check-label " for="inlineRadio2 ">PARTIEL</label>
+          </div>
+
+        </div>
+        <div *ngIf="isShown" style="margin-bottom: 20px;">
+          <label>MONTANT</label>
+          <input type="number" placeholder="Montant à payer" required minlength="4" maxlength="6" (keypress)="numberOnly($event)" formControlName="montantPaye" class="form-control">
+        </div>
+
+        <div style="text-align: center;">
+
+          <div class="form-group ">
+            <h6> <label for="numCpt">COMPTE A DEBITER</label></h6>
+            <div>
+              <select formControlName="numCpt" id="numCpt" class="form-select sm" aria-label="Default select example"
+                required>
+
+                <option *ngFor="let compte of objCompte; let i = index" [value]="objCompte[i].compte">{{objCompte[i].compte}}</option>
+
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <label>IDENTIFIANT</label>
+            <input disabled formControlName="identifiant" class="form-control ">
+          </div>
+          <div class="col ">
+            <label>PERIODE</label>
+            <input disabled formControlName="periode" class="form-control ">
+          </div>
+          <div class="col ">
+            <label>DATE LIMITE</label>
+            <input disabled formControlName="dateLimiteFact" class="form-control ">
+          </div>
+          <div class="col ">
+            <label>PENALITE</label>
+            <input disabled formControlName="penalite" class="form-control ">
+          </div>
+          <div class="col ">
+            <label>MONTANT TOTAL</label>
+            <input disabled formControlName="montantFacture" class="form-control ">
+          </div>
+
+        </div>
+      </form>
+
+      <div class="modal-footer ">
+        <input [disabled]="f.invalid" data-dismiss="modal " value="Confirmer " class="btn btn-success "
+          (click)="openConfirm(modalConfirm)">
+        <!-- <input data-dismiss="modal " value="Confirmer " class="btn btn-success " (click)="Chargement()"> -->
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #modalConfirm let-modal>
+<div *ngIf="typeConfirmation === 2">
+      <div class="modal-header">
+        <h4 class="modal-title " id="modal-basic-title2 ">MERCI DE CONFIRMER LE PAIEMENT</h4>
+        <button type="button " class="close " aria-label="Close " (click)="modal.dismiss( 'Cross click ')">
+          <span aria-hidden="true ">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="ConfirmForm">
+          <div style="margin-bottom: 5px; color: red;" *ngIf="erreurCode">
+            * Mots de passe incorrect.
+          </div>
+        <h6>Entrez votre Mot de passe pour confirmer la transaction</h6>
+        <input  class="form-control" [(ngModel)]="motDePasse" type="password" placeholder="Veuillez insérer votre Mot de Passe de connexion" formControlName="motDePasse">
+      </form>
+
+      </div>
+      <div class="modal-footer">
+        <button [disabled]="motDePasse === ''" type="button" class="btn btn-danger"
+          (click)="modal.close( 'Save click ') ">Annuler</button>
+        <button data-dismiss="modal " class="btn btn-success " (click)="OperationPaie()">Confirmer</button>
+      </div>
+
+    </div>
+
+    <!-- OTP CONFIRMATION -->
+
+    <div *ngIf="typeConfirmation === 1">
+      <div class="modal-header">
+        <h4 class="modal-title " id="modal-basic-title2 ">MERCI DE CONFIRMER LE PAIEMENT</h4>
+        <button type="button " class="close " aria-label="Close " (click)="modal.dismiss( 'Cross click ')">
+          <span aria-hidden="true ">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="ConfirmForm">
+          <div style="margin-bottom: 5px; color: red;" *ngIf="erreurCode">
+            * Code de confirmation incorrect.
+          </div>
+        <h6>Code de confirmation reçu par mail</h6>
+        <input  class="form-control" [(ngModel)]="otpfield" type="password" placeholder="Veuillez insérer le code de confirmation reçu par mail" formControlName="otpfield">
+      </form>
+
+      </div>
+      <div class="modal-footer">
+        <button [disabled]="motDePasse === '' || otpfield === ''" type="button" class="btn btn-danger"
+          (click)="modal.close( 'Save click ') ">Annuler</button>
+        <button data-dismiss="modal " class="btn btn-success " (click)="OperationPaie()">Confirmer</button>
+      </div>
+    </div>
+
+
+  </ng-template>
+  <div *ngIf="loader" style="text-align:center; background-color:#f2f2f254 ">
+    <div>
+      <h2>Veuillez patienter s'il vous plaît</h2>
+      <h3>Paiement en cours...</h3>
+
+      <img src="assets/gifa.gif" style="width: 600px;" alt="">
+
+    </div>
+    <!-- <div class="spinner-grow text-muted" role="status ">
+      <span class="sr-only "></span>
+    </div>
+    <div class="spinner-grow text-warning" role="status ">
+      <span class="sr-only "></span>
+    </div>
+    <div class="spinner-grow text-dark" role="status ">
+      <span class="sr-only "></span>
+    </div> -->
+
+  </div>
+  <div *ngIf="cie_sodeci" style="text-align:center; background-color:#ffffff ">
+    <div>
+      <h2>Veuillez patienter s'il vous plaît</h2>
+      <h3>Recherche en cours...</h3>
+      <img src="assets/o.gif" style="width: 400px;" alt="">
+
+    </div>
+    <!-- <div class="spinner-grow text-muted" role="status ">
+      <span class="sr-only ">Loading...</span>
+    </div>
+    <div class="spinner-grow text-warning" role="status ">
+      <span class="sr-only ">Loading...</span>
+    </div>
+    <div class="spinner-grow text-dark" role="status ">
+      <span class="sr-only ">Loading...</span>
+    </div> -->
+
+  </div>
+  <!-- <div class="d-flex justify-content-center ">
+    <div class="spinner-border " role="status ">
+        <span class="sr-only " id="loading "></span>
+    </div>
+    </div> -->

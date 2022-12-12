@@ -1,0 +1,75 @@
+
+
+
+
+<div class="wrapper fadeInDown">
+  <div id="formContent" style="
+  margin-top: 92px;
+">
+      <!-- Tabs Titles -->
+
+      <!-- Icon -->
+      <div class="fadeIn first">
+          <img src="assets/icone.png" id="icon" alt="User Icon" />
+          <h1>E-FACTURE</h1>
+      </div>
+      <!-- <div class=" alert alert-danger" >
+          <strong> login ou mot de passe erronés...</strong>
+
+      </div> -->
+      <!-- Login Form -->
+      <form [formGroup]="resetForm">
+
+          <!-- <div class="mb-3">
+              <label> Utilisateur </label>
+              <input type="text" name="username" class="form-control " [(ngModel)]="login">
+          </div> -->
+
+          <!-- <div style="margin-bottom: 5px; color: red;" *ngIf="f.email.errors.required">Adresse email réquis</div> -->
+          <div style="margin-bottom: 5px; color: red;" *ngIf="errorAlert">Mot de passe incorrect</div>
+          <div style="margin-bottom: 5px; color: red;" *ngIf="errorAlert1">Mots de passe non identiques</div>
+          <div class="errors" *ngIf="resetForm.get('code1').invalid && (resetForm.get('code1').touched || resetForm.get('code1').dirty)">
+            <div *ngIf="resetForm.get('code1').hasError('required')">
+              password is required
+            </div>
+            <div class="error-text" *ngIf="resetForm.get('code1').hasError('passwordStrength')">
+             {{resetForm.get('code1').errors['passwordStrength']}}
+            </div>
+            </div>
+           <div *ngIf="z">erreur</div>
+
+          <div class="md-5">
+
+              <input *ngIf="field1" required [ngClass]="{ 'is-invalid': submitted && f.code.errors }"  style="background-color: #f6f6f6;color: #0d0d0d;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 5px;width: 85%;border: 2px solid #f6f6f6;transition: all .5s ease-in-out;border-radius: 5px 5px 5px 5px;"
+              [(ngModel)]="code" placeholder="Entrer votre ancien mots de passe" type="text" formControlName="code" name="code" class="form-control ">
+              <input minlength="8" *ngIf="activeField" required [ngClass]="{ 'is-invalid': submitted && f.code.errors }"  style="background-color: #f6f6f6;color: #0d0d0d;padding: 15px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 5px;width: 85%;border: 2px solid #f6f6f6;transition: all .5s ease-in-out;border-radius: 5px 5px 5px 5px;"
+              [(ngModel)]="code1" [(ngModel)]="name" placeholder="Entrer le nouveau mot de passe" type="password" formControlName="code1" name="code1" class="form-control ">
+              <input *ngIf="activeField" required [ngClass]="{ 'is-invalid': submitted && f.code.errors }"  style="background-color: #f6f6f6;color: #0d0d0d;padding: 15px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 5px;width: 85%;border: 2px solid #f6f6f6;transition: all .5s ease-in-out;border-radius: 5px 5px 5px 5px;"
+              [(ngModel)]="code2" placeholder="Entrez à nouveau le mot de passe" type="password" formControlName="code2" name="code2" class="form-control ">
+            </div>
+        <div class="row">
+          <div class="col">
+          <input (click)="CheckMdp()" *ngIf="submitVerif"  [disabled]="code === ''" type="submit" class="fadeIn fourth" value="Verifier " >
+          <input (click)="ChangeMdp()" *ngIf="activeField"  [disabled]="code1 === '' || code2 ===''" type="submit" class="fadeIn fourth" value="valider" >
+
+          </div>
+
+      </div>
+
+      </form>
+
+      <!-- Remind Passowrd -->
+      <div id="formFooter">
+        <div>
+          <div class="row">
+            <div class="col">
+              <a routerLink="/connexion" class="underlineHover">Retour à la page précedente</a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+  </div>
+
+</div>

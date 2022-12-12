@@ -1,0 +1,106 @@
+
+<head>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+</head>
+
+<div class="container" style="margin-top: 100px; text-align: center;">
+  <button class="btn btn-success" (click)="exportPdf()">TELECHARGER</button>
+
+</div>
+
+<div class="container" id="export">
+  <div class="container2">
+      <div class="row">
+          <div class="col-md-6 col-md-offset-3 body-main">
+              <div class="col-md-12">
+                  <div class="row">
+                      <div class="col-md-4"> <img style="float: right;" class="img" alt="Invoce Template" src="assets/img-8.png" /> </div>
+                      <div class="col-md-8 text-right">
+                        <img *ngIf="facturier === 'CIE'" style="width: 100px; margin-top: -145px;" src="assets/logoCie.jpg" alt="">
+                        <img *ngIf="facturier === 'SODECI'" style="width: 100px; margin-top: -145px;" src="assets/logoSodeci.jpeg" alt="">
+                        <h5>PAIEMENT FACTURE <span>{{productData.facturier}}</span></h5>
+                          <!-- <h6>Reference: <span>{{productData.reference}}</span></h6> -->
+                          <h6>Identifiant: <span>{{productData.identifiant }}</span></h6>
+                          <h6>Date d'expiration: <span>{{ dateExpiration }}</span></h6>
+                          <h6>Date de Paiement: <span>{{productData.dateRegle}}</span></h6>
+                      </div>
+                      <div  class="col-md-8 text-left"></div>
+                  </div> <br />
+                  <div class="row">
+                      <div class="col-md-12 text-center">
+                          <h2>REFERENCE PAIEMENT</h2>
+                          <h5 >{{productData.referenceFT}}</h5>
+                      </div>
+                  </div> <br />
+                  <div>
+                      <table class="table">
+                          <thead>
+                              <tr>
+                                  <th>
+                                      <h5 style="color: #e67900;">Description</h5>
+                                  </th>
+                                  <th>
+                                      <h5 style="color: #e67900;">Details</h5>
+                                  </th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td class="col-md-9">FACTURIER</td>
+                                  <td class="col-md-3"><i class="fas fa-rupee-sign" area-hidden="true"></i> {{productData.facturier}} </td>
+                              </tr>
+
+                              <tr>
+                                  <td class="col-md-9">MONTANT PAYE</td>
+                                  <td class="col-md-3"><i class="fas fa-rupee-sign" area-hidden="true"></i> {{productData.montantDebite}} </td>
+                              </tr>
+                              <tr>
+                                  <td class="col-md-9">TYPE PAIEMENT</td>
+                                  <td class="col-md-3"><i class="fas fa-rupee-sign" area-hidden="true"></i> {{productData.typeRegle}} </td>
+                              </tr>
+                              <tr>
+                                  <td class="text-right">
+                                      <p> <strong>Frais: </strong> </p>
+                                      <p> <strong>Montant: </strong> </p>
+                                  </td>
+                                  <td>
+                                      <p> <strong><i class="fas fa-rupee-sign" area-hidden="true"></i> {{commission}} Fcfa </strong> </p>
+                                      <p> <strong><i class="fas fa-rupee-sign" area-hidden="true"></i> {{productData.montantDebite}} Fcfa</strong> </p>
+                                  </td>
+                              </tr>
+                              <tr style="color: #e67900;">
+                                  <td class="text-right">
+                                      <h4><strong>Total:</strong></h4>
+                                  </td>
+                                  <td class="text-left">
+                                      <h4><strong><i class="fas fa-rupee-sign" area-hidden="true"></i> {{productData.montantDebite + commission}} FCFA </strong></h4>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+                  <div>
+                      <div class="col-md-12">
+                          <p><b>Reçu imprimé le :</b> {{mydate | date:'full'}} </p> <br />
+                          <p><b>Pour toutes réclamations, scannez le code Qr !</b></p>
+                      </div>
+                  </div>
+
+           <!-- <img id='barcode'
+            src="https://api.qrserver.com/v1/create-qr-code/?data='+{{summaryPaiement}}+'&amp;size=100x100"
+            alt=""
+            title="Reclamation"
+            width="70"
+            height="70" /> -->
+            <qrcode [qrdata]="summaryPaiement" [width]="100" [errorCorrectionLevel]="'M'">code</qrcode>
+              </div>
+              <p style="text-align: center;">© E-Facture Banque atlantique. All Rights Reserved </p>
+
+          </div>
+      </div>
+  </div>
+</div>
+
+

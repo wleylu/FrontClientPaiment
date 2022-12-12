@@ -1,0 +1,7 @@
+{
+    "/ABIMicroservices/*": {
+        "target": "http://10.181.5.23:8080",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}

@@ -1,0 +1,116 @@
+<style>
+
+    .toolbar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        background-color: #d4d4d3;
+        color: white;
+        font-weight: 600;
+    }
+    
+    .toolbar img {
+        margin: 0 16px;
+    }
+    
+    .navbar-brand {
+        display: inline-block;
+        padding-top: .3125rem;
+        padding-bottom: .3125rem;
+        margin-right: 1rem;
+        font-size: 1.25rem;
+        line-height: inherit;
+        white-space: nowrap;
+        color: white;
+        /* Responsive Styles */
+        @media screen and (max-width: 767px) {
+            .card-container > *:not(.circle-link), .terminal {
+                width: 100%;
+            }
+            .card:not(.highlight-card) {
+                height: 16px;
+                margin: 8px 0;
+            }
+            .card.highlight-card span {
+                margin-left: 72px;
+            }
+            svg#rocket-smoke {
+                right: 120px;
+                transform: rotate(-5deg);
+            }
+        }
+        @media screen and (max-width: 575px) {
+            svg#rocket-smoke {
+                display: none;
+                visibility: hidden;
+            }
+        }
+    }
+</style>
+
+
+
+<header *ngIf="connexion.isUserLoggedIn()" role="banner">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
+        <div class="container-fluid" role="banner">
+            <img id="logo" width="100" alt="ABI Logo" src="https://www.banqueatlantique.net/wp-content/uploads/2020/03/BACI-Logo-slogan.png" />
+            <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
+              &#9776;
+            </button>
+
+            <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto pl-lg-3 pl-0">
+                    <li class="nav-item cta" routerLinkActive="abiActive">
+                        <a class="nav-link" routerLink="/home">ACCUEIL</a>
+                    </li>
+                    <!-- <li class="nav-item cta">
+                      <a class="nav-link" routerLink="/facture-favoris" (click)="isMenuCollapsed = true">FAVORIS</a>
+                    </li> -->
+                    <li routerLinkActive="abiActive" class="nav-item cta">
+                        <a class="nav-link" routerLink="/paiement" (click)="isMenuCollapsed = true">PAIEMENT</a>
+                    </li>
+                    <!-- <li routerLinkActive="abiActive" class="nav-item cta">
+                      <a class="nav-link" routerLink="/Choix_facturier" (click)="isMenuCollapsed = true">PAIEMENT CAISSE</a>
+                    </li> -->
+                    <li routerLinkActive="abiActive" class="nav-item cta">
+                        <a class="nav-link" routerLink="/consultation" (click)="isMenuCollapsed = true">CONSULTATION</a>
+                    </li>
+                    <li routerLinkActive="abiActive" class="nav-item cta">
+                        <a class="nav-link " routerLink="/reclamations" (click)="isMenuCollapsed = true">RECLAMATIONS </a>
+                    </li>
+                    <!-- <li class="nav-item cta">
+                        <a class="nav-link" routerLink="/aide" (click)="isMenuCollapsed = true">AIDE </a>
+                    </li> -->
+
+                </ul>
+
+                <ul class="navbar-nav ml-auto ">
+                    <li ngbDropdown class="nav-item dropdown">
+                        <a style="
+                        margin-right: 32px;
+                    " ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{client}}<i class="fa fa-user"></i></a>
+                        <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01">
+                            <a routerLink="/profil" class="dropdown-item"><i class="fa fa-user"></i>Profil</a>
+                            <a routerLink="/logout" class="dropdown-item"><i class="bi bi-x-circle-fill"></i>Déconnexion</a>
+                        </div>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+
+
+
+
+
+
+<router-outlet></router-outlet>

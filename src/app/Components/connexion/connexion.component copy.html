@@ -1,0 +1,57 @@
+<!--
+
+
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+       Tabs Titles -->
+
+        <!-- Icon -->
+        <div class="fadeIn first">
+            <img src="assets/icone.png" id="icon" alt="User Icon" />
+            <h1>E-FACTURE</h1>
+        </div>
+        <div *ngIf="erreur" style="color: red;">
+            <h5>*Veuillez saisir vos identifiants de connexion</h5>
+
+        </div>
+        <div *ngIf="falseLogin" style="color: red;">
+          <h5>*Identifiants incorrects</h5>
+
+      </div>
+      <div *ngIf="blockUser" style="color: red;">
+        <h5>*Compte non Activé , Veuillez contacter l'administrateur de la plateforme</h5>
+
+    </div>
+
+    <div *ngIf="cptBloque" style="color: red;">
+      <h5>*Nombre de tentative atteinte, Votre compte est désactivé</h5>
+
+  </div>
+        <!-- Login Form -->
+        <form>
+
+            <div class="mb-3">
+                <label> Utilisateur </label>
+                <input (keypress)="numberOnly($event)" maxlength="8" placeholder="Entrez le numéro client" type="text" name="username" class="form-control " [(ngModel)]="login">
+            </div>
+            <div class="md-5">
+                <label>  Mot de passe</label>
+                <!--             <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" aria-label=".form-control-sm example"> -->
+
+                <input placeholder="Mot de passe" style="background-color: #f6f6f6;color: #0d0d0d;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 5px;width: 85%;border: 2px solid #f6f6f6;transition: all .5s ease-in-out;border-radius: 5px 5px 5px 5px;"
+                    type="password" name="password" class="form-control " [(ngModel)]="password">
+            </div>
+            <input type="submit" class="fadeIn fourth" value="Connexion" (click)="checkLogin()">
+            <div style="margin-bottom: 21px;"><a routerLink="/forgot">Mot de passe oublié !</a></div>
+        </form>
+
+
+
+        <!-- Remind Passowrd -->
+        <!--       <div id="formFooter">
+      <a class="underlineHover" href="#">Go to the Site</a>
+    </div>
+ -->
+    </div>
+</div>

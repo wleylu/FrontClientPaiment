@@ -1,0 +1,122 @@
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+  shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
+
+    <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js,
+then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+    </script>
+</head>
+
+<div *ngIf="mail1" class="container">
+  <div class="card myCard">
+    <div class="card-header myheader">
+      <label class="mybtn1">
+        <i class="fa fa-exchange"></i>RECLAMATIONS
+      </label>
+    </div>
+    <div class="card-body">
+        <div class="border">
+            <label class="mybtn">
+                <i class="fa fa-exchange"></i>RECLAMATIONS</label>
+            <h6>
+              <i class="fa fa-id-badge"></i>IDENTIFICATIONS</h6>
+            <div>
+                <h6>Login:
+                    <span id="login" name="login" formControlName="login">{{client}}</span></h6>
+                    <h6>Nom & Prénoms:
+                      <span id="name" name="name"formControlName="name">{{username}}</span></h6>
+                <h6>Telephone: <span id="tel" name="tel" formControlName="tel">{{contact}}</span></h6>
+
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="card myCard" style="margin-top: 5px;">
+      <div class="card-body">
+        <form [formGroup]="reclamEdit">
+          <div class="border" style="margin-top: 30px;">
+              <h6><i class="fa fa-cogs"></i>PARAMETRES</h6>
+              <div class="containers ">
+                  <div class="row">
+                      <div class="col">
+                          <label for="appuser">Reference transaction</label>
+                          <div>
+                              <!-- <select name="facturier" formControlName="facturier" class="form-select sm" aria-label="Default select example">
+                                <option selected>Sélectionner</option>
+                                <option *ngFor="let facturier of AllFacturier; let i = index" [value]="AllFacturier[i].facturier">{{AllFacturier[i].facturier}}</option>
+                                  </select> -->
+                                  <input name="refTransaction" class="form-control" formControlName="refTransaction" type="text"  class="form-control">
+                          </div>
+                      </div>
+                      <div class="col">
+                          <label for="numCpt">Code transaction</label>
+                          <div>
+                              <!-- <select name="numCpt" formControlName="numCpt" class="form-select sm" aria-label="Default select example">
+                              <option selected>Sélectionner</option>
+                              <option *ngFor="let compte of objCompte; let i = index" [value]="objCompte[i].compte">{{objCompte[i].compte}}</option>
+
+                            </select> -->
+                            <input name="codeTransaction" class="form-control" formControlName="codeTransaction" type="text"  class="form-control">
+                          </div>
+                      </div>
+                      <div class="col">
+                          <label for="reference">Montant transaction</label>
+                          <input (keypress)="omit_special_char($event)" name="montant" class="form-control" formControlName="montant" type="text" class="form-control">
+                      </div>
+
+                  </div>
+                  <div class="border" style="margin-top: 30px;">
+                    <h6><label for="motif" class="form-label">MOTIF RECLAMATIONS</label></h6>
+                    <textarea  style="text-transform:uppercase" (keypress)="omit_special_char($event)" class="form-control"  formControlName="message" name="message" rows="3"></textarea>
+
+                    <!-- <input type="text" class="form-control" formControlName="message" name="message"> -->
+                </div>
+              </div>
+          </div>
+
+        </form>
+
+
+
+        <form [formGroup]="MailEnvoi">
+          <div hidden class="border" style="margin-top: 30px;">
+            <h6><label for="motif" class="form-label">MOTIF RECLAMATIONS</label></h6>
+            <input type="text" class="form-control" formControlName="destinataire" name="destinataire">
+        </div>
+        <div hidden class="border" style="margin-top: 30px;">
+          <h6><label for="motif" class="form-label">MOTIF RECLAMATIONS</label></h6>
+          <input type="text" class="form-control" formControlName="objet" name="objet">
+        </div>
+          <div hidden class="border" style="margin-top: 30px;">
+              <h6><label for="motif" class="form-label">MOTIF RECLAMATIONS</label></h6>
+              <input type="password" class="form-control" formControlName="message" name="message" rows="3">
+
+
+              <!-- <input type="text" class="form-control" formControlName="message" name="message"> -->
+          </div>
+
+        </form>
+        <div style="margin-top: 15px;">
+          <button  (click)="onSubmit()" style="float: right;" class="btn btn-success">ENVOYER</button>
+      </div>
+  </div>
+      </div>
+    </div>
+
+

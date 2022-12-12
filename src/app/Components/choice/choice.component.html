@@ -1,0 +1,199 @@
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+    shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js,
+then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<div class="container" *ngIf="afficherContenuSupprimer==false">
+    <div class="card myCard">
+        <div class="card-header myheader">
+            <label class="mybtn1">
+            <i class="fa fa-exchange"></i>TRANSACTION
+          </label>
+        </div>
+        <div class="card-body">
+            <div class="border">
+                <!-- <label class="mybtn">
+                <i class="fa fa-exchange"></i>OPERATIONS
+              </label> -->
+                <!-- <label class="mybtn" style="float: right;" (click)="ngafficherContenuSupprimer()">
+                <i class="fa fa-trash"></i>FACTURE FAVORIS SUPPRIME
+              </label> -->
+                <form [formGroup]="formFactureFavoris">
+
+                    <div class="form-group has-search">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="colorLabel" for="test">Reference transaction <span style="color:#cf350f">*</span></label>
+                                        <!-- <span class="fa fa-search form-control-feedback"></span> -->
+                                        <!-- <input type="number" class="form-control" formControlName="typeFacture"  /> -->
+                                        <!-- <input [formControl]="facturier" type="text" class="form-control" placeholder="Rechercher par Facturier" (keypress)="omit_special_char($event)" /> -->
+                                        <input type="text" class="form-control" formControlName="refTransaction" (keyup.enter)="handleRecherche($event)" onkeyup="if (event.keyCode == 13) document.getElementById('geneCode').focus();" />
+                                    </div>
+                                    <div class="col">
+                                        <label class="colorLabel" for="test">Code transaction</label>
+                                        <!-- <span class="fa fa-search form-control-feedback"></span> -->
+                                        <!-- <input type="number" class="form-control" formControlName="typeFacture"  /> -->
+                                        <!-- <input [formControl]="facturier" type="text" class="form-control" placeholder="Rechercher par Facturier" (keypress)="omit_special_char($event)" /> -->
+                                        <input type="text" class="form-control" formControlName="codeTransaction" id="codeTransaction" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col">
+                                <label class="colorLabel" for="test">Nom</label>
+                                <!-- <span class="fa fa-search form-control-feedback"></span> -->
+                                <input type="text" class="form-control" formControlName="nom" />
+                            </div>
+                            <div class="col">
+                                <label class="colorLabel" for="test">Prénom</label>
+                                <!-- <span class="fa fa-search form-control-feedback"></span> -->
+                                <input type="text" class="form-control" formControlName="nomComplet" />
+                                <!-- <input [formControl]="facturier" type="text" class="form-control" id="test" placeholder="Rechercher par Facturier" (keypress)="omit_special_char($event)" /> -->
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="colorLabel" for="test">N° Piece</label>
+                                <!-- <span class="fa fa-search form-control-feedback"></span> -->
+                                <!-- <input type="number" class="form-control" formControlName="typeFacture"  /> -->
+                                <!-- <input [formControl]="facturier" type="text" class="form-control" placeholder="Rechercher par Facturier" (keypress)="omit_special_char($event)" /> -->
+                                <input type="text" class="form-control" formControlName="piece" />
+                            </div>
+                            <div class="col">
+                                <label class="colorLabel" for="test">Télephone</label>
+                                <!-- <span class="fa fa-search form-control-feedback"></span> -->
+                                <input type="text" class="form-control" formControlName="telephone" />
+                            </div>
+                            <div class="col">
+                                <label class="colorLabel" for="test">Email</label>
+                                <!-- <span class="fa fa-search form-control-feedback"></span> -->
+                                <input type="text" class="form-control" formControlName="email" />
+                                <!-- <input [formControl]="facturier" type="text" class="form-control" id="test" placeholder="Rechercher par Facturier" (keypress)="omit_special_char($event)" /> -->
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="colorLabel" for="test">Montant</label>
+                                <!-- <span class="fa fa-search form-control-feedback"></span> -->
+                                <!-- <input type="number" class="form-control" formControlName="typeFacture"  /> -->
+                                <!-- <input [formControl]="facturier" type="text" class="form-control" placeholder="Rechercher par Facturier" (keypress)="omit_special_char($event)" /> -->
+                                <input type="text" class="form-control" formControlName="monatant" />
+                            </div>
+                            <div class="col">
+                                <label class="colorLabel" for="test">Code confirmation <span style="color:#cf350f">*</span></label>
+                                <!-- <span class="fa fa-search form-control-feedback"></span> -->
+                                <input type="text" class="form-control" formControlName="codeConfirmation" id="codeConfirmation" />
+                            </div>
+                            <div class="col" style="margin-top: 28px;">
+                                <button type="button" (click)="annulerFactureFavoris()" id="geneCode" class="form-control btn myBtnGCode">
+                              <i class="fa fa-cogs" aria-hidden="true"></i>
+                              Généré code
+                            </button>
+                            </div>
+                            <div class="col" style="margin-top: 28px;">
+                                <button type="button" (click)="saveFactureFavoris()" class="form-control btn myBtnGCode">
+                              <i class="fa fa-check" aria-hidden="true"></i>
+                              Enregistrer
+                            </button>
+                            </div>
+                            <div class="col" style="margin-top: 28px;">
+                                <button type="button" (click)="annulerFactureFavoris()" class="form-control btn myBtnGCode">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                          Annuler
+                          </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card myCard" style="margin-top: 5px;">
+        <div class="card-body">
+            <div class="table-responsive">
+
+                <table data-toggle="table" data-pagination="true" data-pagination-h-align="left" data-pagination-detail-h-align="right " class="table table-sm table-striped table-hover table-center myTable">
+                    <thead class="myThead">
+                        <tr>
+                            <th>Réference</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Pièce</th>
+                            <th>Télephone</th>
+                            <th>Montant</th>
+                            <th>Date</th>
+                            <!-- <th>NUMERO RECU</th> -->
+                            <th>Actions</th>
+
+                            <!-- <th>PAGE MODULE</th> -->
+
+                        </tr>
+                    </thead>
+                    <tbody id="myTable ">
+                        <tr *ngFor="let row of listFactureFavoris | paginate: {itemsPerPage:7,currentPage:p};">
+                            <td>{{row.vfacturier.facturier}}</td>
+                            <td class="myTbodyTd">{{row.reference}}</td>
+                            <td class="myTbodyTd">{{row.nomComplet}}</td>
+                            <td class="myTbodyTd">
+                                <button (click)="onEdit(row)" data-toggle="modal" data-target="#modalfacturefavoris" class="btn mx-0"><i style="color: #491e06;font-size: 20px;" class="fa fa-eye" aria-hidden="true"></i></button>
+                                <!-- <button  (click)="onDelete(row)"  class="btn mx-0"><i style="color: #e6390e;font-size: 20px;" class="fa fa-trash-o" aria-hidden="true"></i></button> -->
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+                <pagination-controls (pageChange)="p = $event" previousLabel="" nextLabel="" style="text-align: center;"></pagination-controls>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!---------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------ETAPE D'ACTIVATION FACTURE FAVORIS-------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------->
