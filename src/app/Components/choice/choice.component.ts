@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomResponse } from 'src/app/model/custom-response';
 import { FactureFavoris } from 'src/app/model/facture-favoris';
@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/Services/auth.service';
 import { AutoLogoutService } from 'src/app/Services/auto-logout.service';
 import { FactureFavorisService } from 'src/app/Services/facture-favoris.service';
 import { IServiceEfactureService } from 'src/app/Services/iservice-efacture.service';
+import { Comptemarchand } from '../../model/comptemarchand.model';
 
 
 @Component({
@@ -17,7 +18,8 @@ import { IServiceEfactureService } from 'src/app/Services/iservice-efacture.serv
   styleUrls: ['./choice.component.css'],
 })
 export class ChoiceComponent implements OnInit {
-  formFactureFavoris :FormGroup;
+  formMarchand! :FormGroup;
+  compteBeneficiaire!: Comptemarchand;
   factureFavoris : FactureFavoris  = new FactureFavoris();
   listFactureFavoris : any;
   listeFacturiers:Vfacturier[];
@@ -35,15 +37,11 @@ export class ChoiceComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.formFactureFavoris=this.formbuilber.group({
-        refTransaction:[''],
-        codeTransaction:[''],
-        nom:['']
-      });
+      this.initForm();
       this.nglisteFacturiers();
       this.ngListFactureFavoris();
       this.afficherContenuSupprimer=false;
-      this.ngListFactureFavorisDesactiver();
+    //  this.ngListFactureFavorisDesactiver();
   }
   nglisteFacturiers(){
     this.iServiceEfactureService.listeFacturier().subscribe(res=>{
@@ -59,12 +57,55 @@ export class ChoiceComponent implements OnInit {
   }
 
 
+  initForm(){
+    this.formMarchand=this.formbuilber.group({
+      refTransaction:['',[Validators.required]],
+      codeTransaction:[''],
+      nom:[''],
+      prenom:[''],
+      piece:[''],
+      telephone:[''],
+      email:[''],
+      montant:[0],
+      codeConfirmation:['',[Validators.required]]
 
-  handleRecherche(event: any){
-       console.log("Test réussi "+event.target.value);
+    });
   }
 
-  saveFactureFavoris(){
+  formMaj(marchand: Comptemarchand){
+
+    this.formMarchand.controls['codeTransaction'].setValue(marchand.codeTransaction);
+    this.formMarchand.controls['nom'].setValue(marchand.nom);
+    this.formMarchand.controls['prenom'].setValue(marchand.prenom);
+    this.formMarchand.controls['montant'].setValue(marchand.montant);
+    this.formMarchand.controls['piece'].setValue(marchand.pieceId);
+    this.formMarchand.controls['telephone'].setValue(marchand.tel);
+    this.formMarchand.controls['email'].setValue(marchand.email);
+
+  }
+
+
+  handleRecherche(event: any){
+      // console.log("Test réussi "+event.target.value);
+       this.factureFavorisService.getMarchand(event.target.value).subscribe({
+        next: (data:Comptemarchand)=>{
+          this.formMaj(data);
+        //  console.log(JSON.stringify(data));
+
+        },
+        error: (err) =>{
+          console.log("Une ereur s'est produite");
+        }
+       });
+
+
+  }
+
+  savePaiement(){
+
+  }
+
+  /* saveFactureFavoris(){
     this.factureFavoris.typeFacture=this.formFactureFavoris.value.typeFacture;
     this.factureFavoris.reference=this.formFactureFavoris.value.reference;
     this.factureFavoris.nomComplet=this.formFactureFavoris.value.nomComplet;
@@ -93,7 +134,9 @@ export class ChoiceComponent implements OnInit {
           // });
         }
       });
-  }
+  } */
+/*
+
   desactiverFactureFavoris(){
     this.factureFavoris.typeFacture=this.formFactureFavoris.value.typeFacture;
     this.factureFavoris.reference=this.formFactureFavoris.value.reference;
@@ -121,11 +164,14 @@ export class ChoiceComponent implements OnInit {
       }
     })
 
-  }
-  annulerFactureFavoris(){
+  } */
+
+ /*  annulerFactureFavoris(){
     this.formFactureFavoris.reset();
   }
-  onEdit(row: any) {
+ */
+
+/*   onEdit(row: any) {
     //this.showAdd = 0;
     this.afficherBouton=true;
     this.factureFavoris.id=row.id;
@@ -144,9 +190,10 @@ export class ChoiceComponent implements OnInit {
       this.formValue.controls['telephone'].setValue(row.telephone);
       this.formValue.controls['password'].setValue(row.password);
       this.formValue.controls['roles'].setValue(row.roles);
-     */
-  }
 
+  }  */
+
+/*
   ngafficherContenuSupprimer(){
     this.afficherContenuSupprimer=true;
   }
@@ -158,5 +205,6 @@ export class ChoiceComponent implements OnInit {
       console.log(res);
       this.listFactureFavorisDesactiver=res;
     })
-  }
+  } */
+
 }

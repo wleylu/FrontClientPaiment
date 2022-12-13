@@ -42,7 +42,7 @@ then Bootstrap JS -->
                 <!-- <label class="mybtn" style="float: right;" (click)="ngafficherContenuSupprimer()">
                 <i class="fa fa-trash"></i>FACTURE FAVORIS SUPPRIME
               </label> -->
-                <form [formGroup]="formFactureFavoris">
+                <form [formGroup]="formMarchand">
 
                     <div class="form-group has-search">
                         <div class="row">
@@ -53,14 +53,19 @@ then Bootstrap JS -->
                                         <!-- <span class="fa fa-search form-control-feedback"></span> -->
                                         <!-- <input type="number" class="form-control" formControlName="typeFacture"  /> -->
                                         <!-- <input [formControl]="facturier" type="text" class="form-control" placeholder="Rechercher par Facturier" (keypress)="omit_special_char($event)" /> -->
-                                        <input type="text" class="form-control" formControlName="refTransaction" (keyup.enter)="handleRecherche($event)" onkeyup="if (event.keyCode == 13) document.getElementById('geneCode').focus();" />
+                                        <input type="text" class="form-control" formControlName="refTransaction" (keyup.enter)="handleRecherche($event)" onkeyup="if (event.keyCode == 13) document.getElementById('codeConfirmation').focus();" />
+                                        <span class="text text-danger" *ngIf="formMarchand.controls['refTransaction'].touched
+                                        && formMarchand.controls['refTransaction'].errors
+                                        && formMarchand.controls['refTransaction'].errors['required'] ">
+                                            La référence de la transaction est obligatoire
+                                        </span>
                                     </div>
                                     <div class="col">
-                                        <label class="colorLabel" for="test">Code transaction</label>
+                                        <label class="colorLabel" for="codeTransaction">Code transaction</label>
                                         <!-- <span class="fa fa-search form-control-feedback"></span> -->
                                         <!-- <input type="number" class="form-control" formControlName="typeFacture"  /> -->
                                         <!-- <input [formControl]="facturier" type="text" class="form-control" placeholder="Rechercher par Facturier" (keypress)="omit_special_char($event)" /> -->
-                                        <input type="text" class="form-control" formControlName="codeTransaction" id="codeTransaction" />
+                                        <input type="text" class="form-control" [attr.disabled]="true" formControlName="codeTransaction" id="codeTransaction" />
                                     </div>
                                 </div>
 
@@ -68,12 +73,12 @@ then Bootstrap JS -->
                             <div class="col">
                                 <label class="colorLabel" for="test">Nom</label>
                                 <!-- <span class="fa fa-search form-control-feedback"></span> -->
-                                <input type="text" class="form-control" formControlName="nom" />
+                                <input type="text" class="form-control" [attr.disabled]="true" formControlName="nom" id="nom" />
                             </div>
                             <div class="col">
                                 <label class="colorLabel" for="test">Prénom</label>
                                 <!-- <span class="fa fa-search form-control-feedback"></span> -->
-                                <input type="text" class="form-control" formControlName="nomComplet" />
+                                <input type="text" class="form-control" [attr.disabled]="true" formControlName="prenom" id="prenom" />
                                 <!-- <input [formControl]="facturier" type="text" class="form-control" id="test" placeholder="Rechercher par Facturier" (keypress)="omit_special_char($event)" /> -->
                             </div>
 
@@ -84,17 +89,17 @@ then Bootstrap JS -->
                                 <!-- <span class="fa fa-search form-control-feedback"></span> -->
                                 <!-- <input type="number" class="form-control" formControlName="typeFacture"  /> -->
                                 <!-- <input [formControl]="facturier" type="text" class="form-control" placeholder="Rechercher par Facturier" (keypress)="omit_special_char($event)" /> -->
-                                <input type="text" class="form-control" formControlName="piece" />
+                                <input type="text" class="form-control" [attr.disabled]="true" formControlName="piece" id="piece" />
                             </div>
                             <div class="col">
                                 <label class="colorLabel" for="test">Télephone</label>
                                 <!-- <span class="fa fa-search form-control-feedback"></span> -->
-                                <input type="text" class="form-control" formControlName="telephone" />
+                                <input type="text" class="form-control" [attr.disabled]="true" formControlName="telephone" id="telephone" />
                             </div>
                             <div class="col">
                                 <label class="colorLabel" for="test">Email</label>
                                 <!-- <span class="fa fa-search form-control-feedback"></span> -->
-                                <input type="text" class="form-control" formControlName="email" />
+                                <input type="text" class="form-control" [attr.disabled]="true" formControlName="email" id="email" />
                                 <!-- <input [formControl]="facturier" type="text" class="form-control" id="test" placeholder="Rechercher par Facturier" (keypress)="omit_special_char($event)" /> -->
                             </div>
 
@@ -105,7 +110,7 @@ then Bootstrap JS -->
                                 <!-- <span class="fa fa-search form-control-feedback"></span> -->
                                 <!-- <input type="number" class="form-control" formControlName="typeFacture"  /> -->
                                 <!-- <input [formControl]="facturier" type="text" class="form-control" placeholder="Rechercher par Facturier" (keypress)="omit_special_char($event)" /> -->
-                                <input type="text" class="form-control" formControlName="monatant" />
+                                <input type="text" class="form-control" [attr.disabled]="true" formControlName="montant" id="montant" />
                             </div>
                             <div class="col">
                                 <label class="colorLabel" for="test">Code confirmation <span style="color:#cf350f">*</span></label>
@@ -119,7 +124,7 @@ then Bootstrap JS -->
                             </button>
                             </div>
                             <div class="col" style="margin-top: 28px;">
-                                <button type="button" (click)="saveFactureFavoris()" class="form-control btn myBtnGCode">
+                                <button type="button" (click)="savePaiement()" class="form-control btn myBtnGCode">
                               <i class="fa fa-check" aria-hidden="true"></i>
                               Enregistrer
                             </button>
@@ -136,6 +141,7 @@ then Bootstrap JS -->
             </div>
         </div>
     </div>
+
     <div class="card myCard" style="margin-top: 5px;">
         <div class="card-body">
             <div class="table-responsive">
@@ -175,6 +181,7 @@ then Bootstrap JS -->
         </div>
 
     </div>
+
 </div>
 
 
