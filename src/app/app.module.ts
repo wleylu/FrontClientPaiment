@@ -40,7 +40,7 @@ import { PremiereConnectComponent } from './Components/premiere-connect/premiere
 import { CryptoService } from './Services/crypto.service';
 import { BasicAuthHtppInterceptorService } from './Services/basic-auth-interceptor.service';
 import { ChangePwdComponent } from './Components/change-pwd/change-pwd.component';
-import { FactureFavorisComponent } from './Components/facture-favoris/facture-favoris.component';
+
 
 
 @NgModule({
@@ -68,7 +68,6 @@ import { FactureFavorisComponent } from './Components/facture-favoris/facture-fa
     PageTestComponent,
     PremiereConnectComponent,
     ChangePwdComponent,
-    FactureFavorisComponent
 
   ],
   imports: [

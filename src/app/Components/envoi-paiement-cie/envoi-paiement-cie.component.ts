@@ -1668,10 +1668,9 @@ export class EnvoiPaiementCieComponent implements OnInit {
   }
 
   ngListFactureFavoris(){
-    this.factureFavorisService.listfacturefavoris(localStorage.getItem('login'),true).subscribe(res=>{
-      console.log(res);
-      this.listFactureFavoris=res;
-    });
+
+      this.listFactureFavoris="";
+
   }
 
   onChange(e: any) {

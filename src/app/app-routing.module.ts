@@ -20,7 +20,6 @@ import { ComptesconnexionGuard } from './comptesconnexion.guard';
 import { PageTestComponent } from './Components/page-test/page-test.component';
 import { PremiereConnectComponent } from './Components/premiere-connect/premiere-connect.component';
 import { ChangePwdComponent } from './Components/change-pwd/change-pwd.component';
-import { FactureFavorisComponent } from './Components/facture-favoris/facture-favoris.component';
 
 const routes: Routes = [
   {
@@ -105,12 +104,7 @@ const routes: Routes = [
     component: ConsultationComponent,
     canActivate: [AuthGuardGuard],
   },
-  {
-    path: 'facture-favoris',
-    component: FactureFavorisComponent,
-    canActivate: [AuthGuardGuard],
-  },
-  {
+    {
     path: 'reclamations',
     component: ReclamationsComponent,
     canActivate: [AuthGuardGuard],

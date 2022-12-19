@@ -15,5 +15,11 @@ export class Transaction {
   public libelleOper: string; //libelle de l'opération
   public compteCom: string; //compte de commision
   public refOld: string;
+  public montant:number;
+	public refTransaction:string;
+	public codeTransaction: string;
+	public codeConfirmation: string;
+	public loginAdd: string;
+
 
 }

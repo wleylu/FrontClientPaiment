@@ -5,6 +5,8 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { FactureFavoris } from '../model/facture-favoris';
 import { Comptemarchand } from '../model/comptemarchand.model';
+import { MessageStatut } from '../model/messageStatut.model';
+import { Transaction } from '../model/transaction.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,18 +14,11 @@ import { Comptemarchand } from '../model/comptemarchand.model';
 export class FactureFavorisService {
   private urlServeurApi = environment.urlFinal + 'efacture';
   constructor(private http: HttpClient) { }
-  public savefacturefavoris(data: FactureFavoris): Observable<CustomResponse> {
-    return this.http.post<CustomResponse>(
-      `${this.urlServeurApi}/facturefavoris/savefacturefavoris`,
-      data
-    );
-  }
-  public listfacturefavoris(
-    client: string,
-    statut: boolean
-  ): Observable<FactureFavoris> {
+
+
+  public listTransactions(loginAdd: string): Observable<Comptemarchand[]> {
     return this.http.get<any>(
-      `${this.urlServeurApi}/facturefavoris/listfacturefavoris?client=${client}&statut=${statut}`
+      `${this.urlServeurApi}/cm/admin/listransations/${loginAdd}`
     );
   }
 
@@ -31,6 +26,17 @@ export class FactureFavorisService {
     return this.http.get<Comptemarchand>(
       `${this.urlServeurApi}/cm/admin/benificiaire/${refTransaction}`
     );
+  }
+
+  public setGenerateCode(refTransaction: string): Observable<MessageStatut>{
+    return this.http.get<MessageStatut>(
+      `${this.urlServeurApi}/cm/admin/generateCode/${refTransaction}`
+    );
+  }
+
+
+  public setTransaction(marchand: Comptemarchand): Observable<MessageStatut>{
+    return this.http.post<MessageStatut>(this.urlServeurApi+"/cm/admin/transaction",marchand);
   }
 
 

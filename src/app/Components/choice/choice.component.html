@@ -53,7 +53,7 @@ then Bootstrap JS -->
                                         <!-- <span class="fa fa-search form-control-feedback"></span> -->
                                         <!-- <input type="number" class="form-control" formControlName="typeFacture"  /> -->
                                         <!-- <input [formControl]="facturier" type="text" class="form-control" placeholder="Rechercher par Facturier" (keypress)="omit_special_char($event)" /> -->
-                                        <input type="text" class="form-control" formControlName="refTransaction" (keyup.enter)="handleRecherche($event)" onkeyup="if (event.keyCode == 13) document.getElementById('codeConfirmation').focus();" />
+                                        <input type="text" class="form-control" formControlName="refTransaction" (keyup.enter)="handleRecherche($event)" onkeyup="if (event.keyCode == 13) document.getElementById('geneCode').focus();" />
                                         <span class="text text-danger" *ngIf="formMarchand.controls['refTransaction'].touched
                                         && formMarchand.controls['refTransaction'].errors
                                         && formMarchand.controls['refTransaction'].errors['required'] ">
@@ -113,24 +113,30 @@ then Bootstrap JS -->
                                 <input type="text" class="form-control" [attr.disabled]="true" formControlName="montant" id="montant" />
                             </div>
                             <div class="col">
-                                <label class="colorLabel" for="test">Code confirmation <span style="color:#cf350f">*</span></label>
+                                <label class="colorLabel" for="codeConfirmation">Code confirmation <span style="color:#cf350f">*</span></label>
                                 <!-- <span class="fa fa-search form-control-feedback"></span> -->
                                 <input type="text" class="form-control" formControlName="codeConfirmation" id="codeConfirmation" />
+                                <span class="text text-danger" *ngIf="formMarchand.controls['codeConfirmation'].touched
+                              && formMarchand.controls['codeConfirmation'].errors
+                              && formMarchand.controls['codeConfirmation'].errors['required']">
+                                  Veuillez saisir le code de confirmation
+                              </span>
                             </div>
+
                             <div class="col" style="margin-top: 28px;">
-                                <button type="button" (click)="annulerFactureFavoris()" id="geneCode" class="form-control btn myBtnGCode">
+                                <button type="button" (click)="handleGeneCode()" id="geneCode" class="form-control btn myBtnGCode">
                               <i class="fa fa-cogs" aria-hidden="true"></i>
                               Généré code
                             </button>
                             </div>
                             <div class="col" style="margin-top: 28px;">
-                                <button type="button" (click)="savePaiement()" class="form-control btn myBtnGCode">
+                                <button type="button" (click)="savePaiement()" [disabled]="!formMarchand.valid" class="form-control btn myBtnGCode">
                               <i class="fa fa-check" aria-hidden="true"></i>
-                              Enregistrer
+                              Valider
                             </button>
                             </div>
                             <div class="col" style="margin-top: 28px;">
-                                <button type="button" (click)="annulerFactureFavoris()" class="form-control btn myBtnGCode">
+                                <button type="button" class="form-control btn myBtnGCode">
                             <i class="fa fa-times" aria-hidden="true"></i>
                           Annuler
                           </button>
@@ -141,12 +147,11 @@ then Bootstrap JS -->
             </div>
         </div>
     </div>
-
     <div class="card myCard" style="margin-top: 5px;">
         <div class="card-body">
             <div class="table-responsive">
 
-                <table data-toggle="table" data-pagination="true" data-pagination-h-align="left" data-pagination-detail-h-align="right " class="table table-sm table-striped table-hover table-center myTable">
+                <table data-toggle="table" data-pagination="true" data-pagination-h-align="left" data-pagination-detail-h-align="right " class="table table-sm table-striped table-bordered table-hover table-center myTable">
                     <thead class="myThead">
                         <tr>
                             <th>Réference</th>
@@ -163,12 +168,16 @@ then Bootstrap JS -->
 
                         </tr>
                     </thead>
-                    <tbody id="myTable ">
-                        <tr *ngFor="let row of listFactureFavoris | paginate: {itemsPerPage:7,currentPage:p};">
-                            <td>{{row.vfacturier.facturier}}</td>
-                            <td class="myTbodyTd">{{row.reference}}</td>
-                            <td class="myTbodyTd">{{row.nomComplet}}</td>
-                            <td class="myTbodyTd">
+                    <tbody>
+                        <tr *ngFor="let transaction of listTransaction | paginate: {itemsPerPage:7,currentPage:p};">
+                            <td>{{transaction.refTransaction}}</td>
+                            <td>{{transaction.nom}}</td>
+                            <td>{{transaction.prenom}}</td>
+                            <td>{{transaction.pieceId}}</td>
+                            <td>{{transaction.tel}}</td>
+                            <td>{{transaction.montant}}</td>
+                            <td>{{transaction.dateModification}}</td>
+                            <td>
                                 <button (click)="onEdit(row)" data-toggle="modal" data-target="#modalfacturefavoris" class="btn mx-0"><i style="color: #491e06;font-size: 20px;" class="fa fa-eye" aria-hidden="true"></i></button>
                                 <!-- <button  (click)="onDelete(row)"  class="btn mx-0"><i style="color: #e6390e;font-size: 20px;" class="fa fa-trash-o" aria-hidden="true"></i></button> -->
                             </td>

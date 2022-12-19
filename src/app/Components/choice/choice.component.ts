@@ -4,13 +4,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomResponse } from 'src/app/model/custom-response';
 import { FactureFavoris } from 'src/app/model/facture-favoris';
+import { MessageStatut } from 'src/app/model/messageStatut.model';
+import { Transaction } from 'src/app/model/transaction.model';
 import { Vfacturier } from 'src/app/model/vfacturier';
 import { AuthService } from 'src/app/Services/auth.service';
 import { AutoLogoutService } from 'src/app/Services/auto-logout.service';
 import { FactureFavorisService } from 'src/app/Services/facture-favoris.service';
 import { IServiceEfactureService } from 'src/app/Services/iservice-efacture.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Comptemarchand } from '../../model/comptemarchand.model';
-
 
 @Component({
   selector: 'app-choice',
@@ -19,9 +21,11 @@ import { Comptemarchand } from '../../model/comptemarchand.model';
 })
 export class ChoiceComponent implements OnInit {
   formMarchand! :FormGroup;
+  msgRetour! : MessageStatut;
   compteBeneficiaire!: Comptemarchand;
   factureFavoris : FactureFavoris  = new FactureFavoris();
-  listFactureFavoris : any;
+  listTransaction : Comptemarchand[];
+
   listeFacturiers:Vfacturier[];
   ngDropdown = "Selectionner le facturier";
   factureParDefaut:string;
@@ -38,8 +42,7 @@ export class ChoiceComponent implements OnInit {
 
   ngOnInit(): void {
       this.initForm();
-      this.nglisteFacturiers();
-      this.ngListFactureFavoris();
+      this.handleGetListeTrans();
       this.afficherContenuSupprimer=false;
     //  this.ngListFactureFavorisDesactiver();
   }
@@ -49,11 +52,16 @@ export class ChoiceComponent implements OnInit {
       this.listeFacturiers= res;
     })
   }
-  ngListFactureFavoris(){
-    this.factureFavorisService.listfacturefavoris(this.loginUser,true).subscribe(res=>{
-      console.log(res);
-      this.listFactureFavoris=res;
-    })
+
+ handleGetListeTrans(){
+  this.factureFavorisService.listTransactions(this.loginUser).subscribe({
+    next: (data:Comptemarchand[])=>{
+        this.listTransaction = data;
+    },
+    error:(err)=>{
+      console.log("Une erreur est survenue");
+    }
+  });
   }
 
 
@@ -67,13 +75,11 @@ export class ChoiceComponent implements OnInit {
       telephone:[''],
       email:[''],
       montant:[0],
-      codeConfirmation:['',[Validators.required]]
-
+      codeConfirmation:['',[Validators.required]],
     });
   }
 
   formMaj(marchand: Comptemarchand){
-
     this.formMarchand.controls['codeTransaction'].setValue(marchand.codeTransaction);
     this.formMarchand.controls['nom'].setValue(marchand.nom);
     this.formMarchand.controls['prenom'].setValue(marchand.prenom);
@@ -81,7 +87,54 @@ export class ChoiceComponent implements OnInit {
     this.formMarchand.controls['piece'].setValue(marchand.pieceId);
     this.formMarchand.controls['telephone'].setValue(marchand.tel);
     this.formMarchand.controls['email'].setValue(marchand.email);
+    this.formMarchand.controls['codeConfirmation'].setValue((''));
+    this.formMarchand.controls['refTransaction'].setValue(marchand.refTransaction);
+    }
 
+ formSaveBenef(){
+    this.compteBeneficiaire = new Comptemarchand();
+    this.compteBeneficiaire.codeConfirmation = this.formMarchand.value.codeConfirmation;
+    this.compteBeneficiaire.refTransaction = this.formMarchand.value.refTransaction;
+    this.compteBeneficiaire.codeTransaction = this.formMarchand.value.codeTransaction;
+    this.compteBeneficiaire.montant = this.formMarchand.value.montant;
+    this.compteBeneficiaire.pieceId = this.formMarchand.value.piece;
+    this.compteBeneficiaire.nom = this.formMarchand.value.nom;
+    this.compteBeneficiaire.prenom = this.formMarchand.value.prenom;
+    this.compteBeneficiaire.loginAdd = this.loginUser;
+    this.compteBeneficiaire.email = this.formMarchand.value.email;
+    this.compteBeneficiaire.tel = this.formMarchand.value.telephone;
+
+ }
+
+  handleGeneCode(){
+    let codeRef = this.formMarchand.value.refTransaction;
+    this.factureFavorisService.setGenerateCode(codeRef).subscribe({
+      next: (data:MessageStatut)=>{
+       console.log(JSON.stringify(data));
+       if(data.codeMsg === "08"){
+        Swal.fire({
+          tposition: 'top-end',
+          icon: 'success',
+          title: data.libelle,
+          showConfirmButton: false,
+          timer: 5000
+        });
+       }
+       else {
+        Swal.fire({
+          tposition: 'top-end',
+          icon: 'error',
+          title: data.libelle,
+          showConfirmButton: false,
+          timer: 5000
+        });
+       }
+
+      },
+      error: (err) =>{
+        console.log("Une ereur s'est produite");
+      }
+     });
   }
 
 
@@ -89,10 +142,7 @@ export class ChoiceComponent implements OnInit {
       // console.log("Test réussi "+event.target.value);
        this.factureFavorisService.getMarchand(event.target.value).subscribe({
         next: (data:Comptemarchand)=>{
-          this.formMaj(data);
-        //  console.log(JSON.stringify(data));
-
-        },
+          this.formMaj(data);        },
         error: (err) =>{
           console.log("Une ereur s'est produite");
         }
@@ -102,7 +152,38 @@ export class ChoiceComponent implements OnInit {
   }
 
   savePaiement(){
+      this.formSaveBenef();
+    //console.log("Objet Marchand : "+JSON.stringify(this.compteBeneficiaire));
+      this.factureFavorisService.setTransaction(this.compteBeneficiaire).subscribe({
+        next:(data:MessageStatut)=>{
+          if(data.codeMsg == "00"){
+            Swal.fire({
+              tposition: 'top-end',
+              icon: 'success',
+              title: data.libelle,
+              showConfirmButton: false,
+              timer: 5000
+            });
+            this.formMarchand.reset();
+          }
 
+
+          if(data.codeMsg != "00"){
+            Swal.fire({
+              tposition: 'top-end',
+              icon: 'error',
+              title: data.libelle,
+              showConfirmButton: false,
+              timer: 5000
+            });
+
+          }
+
+        },
+        error: (err)=>{
+          console.log("Mon erreur est :"+err);
+        }
+      });
   }
 
   /* saveFactureFavoris(){
