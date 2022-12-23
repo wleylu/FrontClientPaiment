@@ -14,7 +14,7 @@ export class Comptemarchand {
       email!:string;
       loginAdd!: string;
       loginMaj!: string;
-      dateModification !: Date;
+      dateModification!:string ;
       loginModification!: string;
 
 

@@ -701,8 +701,9 @@ export class EnvoiPaiementCieComponent implements OnInit {
           console.log('consultation');
           if (this.SODECIFACTURE1 !=null) {
             this.SODECIFACTURE1.forEach(CiefactureUnique => {
-              console.log(CiefactureUnique.NUM_FAC);
-              this.consultationfactureService.getFactureByNumeroFacture(CiefactureUnique.NUM_FAC).subscribe((res:CustomResponse)=>{
+          /*     console.log(CiefactureUnique.NUM_FAC);
+              this.consultationfactureService.getFactureByNumeroFacture(CiefactureUnique.NUM_FAC).
+              subscribe((res:CustomResponse)=>{
                   console.log('consultation');
                   console.log(res);
 
@@ -714,7 +715,7 @@ export class EnvoiPaiementCieComponent implements OnInit {
                     console.log('fact');
                   }
                   console.log('consultation');
-                });
+                }); */
            });
           }
 

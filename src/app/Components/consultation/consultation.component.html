@@ -28,111 +28,94 @@
 
 
 <div class="container" style="font-size: 1.89vh">
-  <div class="card myCard">
-    <div class="card-header myheader">
-      <label class="mybtn1">
+    <div class="card myCard">
+        <div class="card-header myheader">
+            <label class="mybtn1">
         <i class="fa fa-exchange"></i>CONSULTATION DES TRANSACTIONS
       </label>
-    </div>
-    <div class="card-body">
-      <div class="border">
-        <!-- <label class="mybtn">
+        </div>
+        <div class="card-body">
+            <div class="border">
+                <!-- <label class="mybtn">
             <i class="fa fa-exchange"></i>CONSULTATION DES TRANSACTIONS</label> -->
-        <form #f="ngForm" [formGroup]="editForm">
+                <form #f="ngForm" [formGroup]="formCherche">
 
-            <div class="form-group has-search">
-                <div class="row">
-                    <div class="col">
-                      <label style="font-weight: bold;" for="test">Identifiant</label>
-                        <span class="fa fa-search form-control-feedback"></span>
-                        <input [formControl]="identifiant" type="text" class="form-control" id="test" placeholder="Rechercher par identifiant" (keypress)="numberOnly($event)" />
+                    <div class="form-group has-search">
+                        <div class="row">
+                            <div class="col">
+                                <label style="font-weight: bold;font-size: 1rem;" for="ref_transaction">Référence transaction</label>
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input formControlName="ref_transaction" (keyup.enter)="getAllTransaction()" type="text" class="form-control" id="ref_transaction" />
+                            </div>
+                            <div class="col">
+                                <label style="font-weight: bold;font-size: 1rem;" for="test">Code transaction</label>
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input formControlName="code_transaction" (keyup.enter)="getAllTransaction()" type="text" class="form-control" id="test" />
+                            </div>
+
+
+                            <div class="col">
+                                <label style="font-weight: bold;font-size: 1rem;" for="test">Date début</label>
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="date" class="form-control" formControlName="startDate" (ngModelChange)="getAllTransaction()" name="startDate" />
+                            </div>
+                            <div class="col">
+                                <label style="font-weight: bold;font-size: 1rem;" for="test">Date Fin</label>
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="date" class="form-control" formControlName="endDate" (ngModelChange)="getAllTransaction()" name="endDate" />
+                            </div>
+                            <!--  <div class="col" style="margin-top: 28px;">
+                                <button style="text-align: left;padding-left: initial;text-align: center;" (click)="reset()" type="button" class="form-control btn myBtnGCode">Réinitialiser</button>
+                            </div> -->
+                        </div>
                     </div>
-                    <div class="col">
-                      <label style="font-weight: bold;" for="test">Facturier</label>
-                      <!-- <span class="fa fa-search form-control-feedback"></span> -->
-                      <select (change)="onChange($event.target.value)" [formControl]="facturier" id="facturier" formControlName="facturier" class="form-select sm" aria-label="Default select example">
-                        <option  value = null >ALL</option>
-
-                        <option  *ngFor="let facturier of AllFacturier; let i = index" [value]="AllFacturier[i].facturier">{{AllFacturier[i].facturier}}</option>
-                          </select>
-                      <!-- <input [formControl]="facturier" type="text" class="form-control" id="test" placeholder="Rechercher par Facturier" (keypress)="omit_special_char($event)" /> -->
-                  </div>
-
-
-                    <div class="col">
-                      <label style="font-weight: bold;" for="test">Date début</label>
-                        <span class="fa fa-search form-control-feedback"></span>
-                        <input type="date" class="form-control" formControlName="startDate" name="startDate" (ngModelChange)="displayDate($event,$event)"/>
-                    </div>
-                    <div class="col">
-                      <label style="font-weight: bold;" for="test">Date Fin</label>
-                        <span class="fa fa-search form-control-feedback"></span>
-                        <input type="date" class="form-control" formControlName="endDate"  displayDate name="endDate" (ngModelChange)="displayDate($event,$event)"/>
-                    </div>
-                   <div class="col" style="margin-top: 28px;">
-                        <button style="text-align: left;padding-left: initial;text-align: center;" (click)="reset()" type="button" class="form-control btn myBtnGCode">Réinitialiser</button>
-                   </div>
-                </div>
+                </form>
             </div>
-        </form>
-      </div>
+        </div>
     </div>
-  </div>
 
-  <div class="card myCard" style="margin-top: 5px;">
-    <div class="card-body">
-      <div class="table-responsive">
+    <div class="card myCard" style="margin-top: 5px;">
+        <div class="card-body">
+            <div class="table-responsive">
 
-        <table style="text-size-adjust: auto;font-size: 14px;" data-toggle="table" data-pagination="true" data-pagination-h-align="left" data-pagination-detail-h-align="right " class="table table-sm table-striped table-hover table-center">
-            <thead class="myThead">
-                <tr>
-                    <th>N°</th>
-                    <th>IDENTIFIANT</th>
-                    <th style="text-align: center !important;">REFERENCE</th>
-                    <th style="text-align: center !important;">NUMERO RECU</th>
-                    <!-- <th>NUMERO RECU</th> -->
-                    <th style="text-align: center !important;">DATE PAIEMENT</th>
-                    <th style="text-align: center !important;">EXPIRATION FACTURE</th>
-                    <th style="text-align: center !important;">FACTURIER</th>
-                    <th style="text-align: center !important;">MONTANT</th>
-                    <th style="text-align: center !important;">TYPE</th>
-                    <th style="text-align: center !important;">STATUT</th>
-                    <th style="text-align: center !important;">ACTIONS</th>
+                <table style="text-size-adjust: auto;font-size: 14px;" data-toggle="table" data-pagination="true" data-pagination-h-align="left" data-pagination-detail-h-align="right " class="table table-sm table-striped table-hover table-center">
+                    <thead class="myThead">
+                        <tr>
+                            <th>Réference</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Pièce</th>
+                            <th>Télephone</th>
+                            <th>Montant</th>
+                            <th>Date</th>
+                            <!-- <th>NUMERO RECU</th> -->
+                            <!-- <th>Actions</th> -->
 
-                    <!-- <th>PAGE MODULE</th> -->
+                            <!-- <th>PAGE MODULE</th> -->
 
-                </tr>
-            </thead>
-            <tbody id="myTable ">
-                <tr *ngFor="let envoi of allEnvois | paginate: { itemsPerPage: 10, currentPage: p } | search : [identifiant.value, facturier.value] :['identifiant','facturier']; let i = index ">
-                    <td><span>{{i+1}}</span></td>
-                    <td><span>{{envoi.identifiant}}</span></td>
-                    <td style="text-align: center !important;"><span>{{envoi.referenceFT}}</span></td>
-                    <!-- <td><span>{{envoi.reference}}</span></td> -->
-                    <td style="text-align: center !important;"><span>{{envoi.reference}}</span></td>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable ">
+                        <tr *ngFor="let trasaction of listeTransactions | paginate: { itemsPerPage: 10, currentPage: p } ; let i = index ">
+                            <td>{{ trasaction.refTransaction }}</td>
+                            <td>{{ trasaction.nom }}</td>
+                            <td>{{ trasaction.prenom }}</td>
+                            <td>{{ trasaction.pieceId }}</td>
+                            <td>{{ trasaction.tel }}</td>
+                            <td>{{ trasaction.montant }}</td>
+                            <td>{{ trasaction.dateModification }}</td>
 
-                    <td style="text-align: center !important;"><span>{{envoi.dateRegle  + ' '+ envoi.heure }}</span></td>
-                    <td style="text-align: center !important;"><span>{{envoi.dtExpFacture}}</span></td>
-                    <td style="text-align: center !important;" *ngIf=""><span>{{envoi.dtExpFacture}}</span></td>
-                    <td style="text-align: center !important;"><span>{{envoi.facturier}}</span></td>
-                    <td style="text-align: center !important;"><span>{{envoi.montantDebite}}</span></td>
-                    <td style="text-align: center !important;"><span>{{envoi.typeRegle}}</span></td>
-                    <td style="text-align: center !important;"><span>{{envoi.statut}}</span></td>
-
-                    <td style="text-align: center !important;">
-                        <button class="btn btn-sm myBtnGCode " (click)="onSelect(envoi)">
+                            <!--  <td style="text-align: center !important;">
+                                <button class="btn btn-sm myBtnGCode " (click)="onSelect(envoi)">
                       <i class="fa fa-print "></i>Imprimer</button>
-                    </td>
+                            </td> -->
 
-                </tr>
-            </tbody>
+                        </tr>
+                    </tbody>
 
-        </table>
-        <pagination-controls style="text-align: center;" previousLabel="" nextLabel="" (pageChange)="p = $event"></pagination-controls>
+                </table>
+                <pagination-controls style="text-align: center;" previousLabel="" nextLabel="" (pageChange)="p = $event"></pagination-controls>
 
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
-
-
-

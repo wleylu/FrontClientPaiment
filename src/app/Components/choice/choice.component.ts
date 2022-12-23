@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -25,6 +26,7 @@ export class ChoiceComponent implements OnInit {
   compteBeneficiaire!: Comptemarchand;
   factureFavoris : FactureFavoris  = new FactureFavoris();
   listTransaction : Comptemarchand[];
+  messageRecherche :  string=null;
 
   listeFacturiers:Vfacturier[];
   ngDropdown = "Selectionner le facturier";
@@ -88,10 +90,13 @@ export class ChoiceComponent implements OnInit {
     this.formMarchand.controls['telephone'].setValue(marchand.tel);
     this.formMarchand.controls['email'].setValue(marchand.email);
     this.formMarchand.controls['codeConfirmation'].setValue((''));
-    this.formMarchand.controls['refTransaction'].setValue(marchand.refTransaction);
+
     }
 
  formSaveBenef(){
+   var madate = new Date();
+   var datePipe = new DatePipe('en-US');
+    let vdate = datePipe.transform(madate,'yyyy-M-dd hh:mm:s');
     this.compteBeneficiaire = new Comptemarchand();
     this.compteBeneficiaire.codeConfirmation = this.formMarchand.value.codeConfirmation;
     this.compteBeneficiaire.refTransaction = this.formMarchand.value.refTransaction;
@@ -101,6 +106,9 @@ export class ChoiceComponent implements OnInit {
     this.compteBeneficiaire.nom = this.formMarchand.value.nom;
     this.compteBeneficiaire.prenom = this.formMarchand.value.prenom;
     this.compteBeneficiaire.loginAdd = this.loginUser;
+    this.compteBeneficiaire.loginMaj = this.loginUser;
+    this.compteBeneficiaire.dateModification =vdate;
+    this.compteBeneficiaire.loginModification = this.loginUser;
     this.compteBeneficiaire.email = this.formMarchand.value.email;
     this.compteBeneficiaire.tel = this.formMarchand.value.telephone;
 
@@ -108,6 +116,7 @@ export class ChoiceComponent implements OnInit {
 
   handleGeneCode(){
     let codeRef = this.formMarchand.value.refTransaction;
+    this.formMarchand.controls['codeConfirmation'].setValue('');
     this.factureFavorisService.setGenerateCode(codeRef).subscribe({
       next: (data:MessageStatut)=>{
        console.log(JSON.stringify(data));
@@ -139,10 +148,21 @@ export class ChoiceComponent implements OnInit {
 
 
   handleRecherche(event: any){
-      // console.log("Test réussi "+event.target.value);
        this.factureFavorisService.getMarchand(event.target.value).subscribe({
         next: (data:Comptemarchand)=>{
-          this.formMaj(data);        },
+          if (!data.refTransaction){
+            this.messageRecherche = "La réference est inexistante dans la base";
+            let refTransac = this.formMarchand.value.refTransaction;
+            this.formMarchand.reset();
+            this.formMarchand.controls['refTransaction'].setValue(refTransac);
+
+          }
+          else
+          {
+            this.messageRecherche='';
+                this.formMaj(data);
+          }
+               },
         error: (err) =>{
           console.log("Une ereur s'est produite");
         }
@@ -151,12 +171,19 @@ export class ChoiceComponent implements OnInit {
 
   }
 
+  savePaiement1(){
+    this.formSaveBenef();
+    this.listTransaction.push(this.compteBeneficiaire);
+    console.log("Beneficiaire :"+JSON.stringify(this.compteBeneficiaire));
+  }
+
   savePaiement(){
       this.formSaveBenef();
-    //console.log("Objet Marchand : "+JSON.stringify(this.compteBeneficiaire));
+    console.log("Objet Marchand : "+JSON.stringify(this.compteBeneficiaire));
       this.factureFavorisService.setTransaction(this.compteBeneficiaire).subscribe({
         next:(data:MessageStatut)=>{
           if(data.codeMsg == "00"){
+            this.listTransaction.push(this.compteBeneficiaire);
             Swal.fire({
               tposition: 'top-end',
               icon: 'success',

@@ -5,7 +5,6 @@
 html,
 body {
     height: 1vh;
-
 }
 
 body {
@@ -14,45 +13,55 @@ body {
 }
 
 .mybtn1 {
-  color: #fff;
-  font-weight: bold;
-  font-size: 18px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
 }
-.myheader{
-  background: #105a9b !important;
+
+.myheader {
+    background: #105a9b !important;
 }
-.myTable{
-  text-size-adjust: auto;
-  font-size: 14px;
+
+.myTable {
+    /*text-size-adjust: ;*/
+    font-size: 14px;
+    border: 1px solid black;
 }
-.myThead{
-  color: #ffffff;
-  background: #105a9b !important;
+
+.myThead {
+    color: #ffffff;
+    background: #105a9b !important;
+    border: 1px solid black;
 }
-.myTbodyTd{
-  width: 19% !important;
-  text-align: center !important;
+
+.myTbodyTd {
+    width: 19% !important;
+    text-align: center !important;
 }
+
 .myBtnGCode {
-  border: 1px solid #105a9b !important;
-  color: #105a9b !important;
+    border: 1px solid #105a9b !important;
+    color: #105a9b !important;
 }
 
 .myBtnGCode:hover {
-  border: 1px solid #105a9b !important;
-  color: #ffffff !important;
-  background-color: #105a9b !important;
+    border: 1px solid #105a9b !important;
+    color: #ffffff !important;
+    background-color: #105a9b !important;
 }
+
 .myBtnGCode:focus {
-  border: 1px solid #105a9b !important;
-  color: #ffffff !important;
-  background-color: #105a9b !important;
+    border: 1px solid #105a9b !important;
+    color: #ffffff !important;
+    background-color: #105a9b !important;
 }
-.myBtnGAn{
-  border: 1px solid #105a9b !important;
-  color: #ffffff !important;
-  background-color: #105a9b !important;
+
+.myBtnGAn {
+    border: 1px solid #105a9b !important;
+    color: #ffffff !important;
+    background-color: #105a9b !important;
 }
-.myCard{
-  box-shadow: 0px 2px 2px 2px #e8e5e5;
+
+.myCard {
+    box-shadow: 0px 2px 2px 2px #e8e5e5;
 }

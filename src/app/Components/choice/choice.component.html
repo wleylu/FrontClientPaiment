@@ -59,6 +59,7 @@ then Bootstrap JS -->
                                         && formMarchand.controls['refTransaction'].errors['required'] ">
                                             La référence de la transaction est obligatoire
                                         </span>
+                                        <span class="text text-danger" *ngIf="messageRecherche">{{ messageRecherche }}</span>
                                     </div>
                                     <div class="col">
                                         <label class="colorLabel" for="codeTransaction">Code transaction</label>

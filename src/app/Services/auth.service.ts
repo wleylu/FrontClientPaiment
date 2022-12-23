@@ -18,13 +18,13 @@ export class AuthService {
   headeroff: HttpHeaders;
   redirectUrl!: string;
   users: User_login;
-
   constructor(private httpClient: HttpClient, private router: Router) {
     this.users = new User_login();
   }
   loggedUser: string;
 
   public login(login: string, password: string): Observable<Utilisateur> {
+
     return this.httpClient.post<any>(environment.urlFinal + 'efacture/login', {
       login: login,
       password: password,
